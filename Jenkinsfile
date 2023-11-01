@@ -44,11 +44,7 @@ pipeline {
         failure {
             emailext to: 'karthisk217@gmail.com',
             subject: 'Jenkins Build Failed',
-            body: 'The build has failed. You can view the build log [here](${BUILD_URL}console)'.toString()
-        }
-    }
-    publishers {
-        emailext {
+            body: 'The build has failed. You can view the build log [here](${BUILD_URL}console)'.toString(),
             attachLog: true
         }
     }
