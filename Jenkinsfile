@@ -36,10 +36,16 @@ pipeline {
         }
     }
     post {
-        always {
-            emailext to: "karthisk217@gmail.com",
-            subject: "Test Email",
-            body: "Test",
+        success {
+            emailext to: 'karthisk217@gmail.com',
+            subject: 'Jenkins Build Successful',
+            body: 'The build was successful. You can view the build log [here](${BUILD_URL}console)'.toString()
+            attachLog: true
+        }
+        failure {
+            emailext to: 'karthisk217@gmail.com',
+            subject: 'Jenkins Build Failed',
+            body: 'The build has failed. You can view the build log [here](${BUILD_URL}console)'.toString(),
             attachLog: true
         }
     }
