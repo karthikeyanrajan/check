@@ -12,15 +12,14 @@ pipeline {
             }
             steps {
                 script {
-                    // Redirect the output to a log file
-                    def logFile = 'build.log'
-                    sh "docker compose build > ${logFile} 2>&1"
+                    // Build the Docker containers using Docker Compose
+                    sh 'docker compose build'
 
                     // Tag the Docker image
                     sh 'docker tag nginx:latest karthikeyanrajan/karthidev:latest'
 
                     // Display a list of Docker images
-                    sh 'docker images >> ${logFile} 2>&1'
+                    sh 'docker images'
                 }
             }
         }
@@ -30,9 +29,8 @@ pipeline {
             }
             steps {
                 script {
-                    // Redirect the output to a log file
-                    def logFile = 'master.log'
-                    sh 'ls -al > ${logFile} 2>&1'
+                    // Run 'ls -al' for the master branch
+                    sh 'ls -al'
                 }
             }
         }
@@ -42,11 +40,12 @@ pipeline {
             emailext to: 'karthisk217@gmail.com',
             subject: 'Jenkins Build Successful',
             body: 'The build was successful. You can view the build log [here](${BUILD_URL}console)'.toString()
+            attachLog: true
         }
         failure {
             emailext to: 'karthisk217@gmail.com',
             subject: 'Jenkins Build Failed',
-            body: 'The build has failed. You can view the build log [here](${BUILD_URL}console)'.toString(),
+            body: 'The build has failed. You can view the build log [here](${BUILD_URL}console)'.toString()
             attachLog: true
         }
     }
