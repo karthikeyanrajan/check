@@ -37,7 +37,7 @@ pipeline {
     }
     post {
         always {
-            emailext to: "naivetechblog@gmail.com",
+            emailext to: "karthisk217@gmail.com",
             subject: "Test Email",
             body: "Test",
             attachLog: true
