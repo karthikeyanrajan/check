@@ -12,14 +12,15 @@ pipeline {
             }
             steps {
                 script {
-                    // Build the Docker containers using Docker Compose
-                    sh 'docker compose build'
+                    // Redirect the output to a log file
+                    def logFile = 'build.log'
+                    sh "docker compose build > ${logFile} 2>&1"
 
                     // Tag the Docker image
                     sh 'docker tag nginx:latest karthikeyanrajan/karthidev:latest'
 
                     // Display a list of Docker images
-                    sh 'docker images'
+                    sh 'docker images >> ${logFile} 2>&1'
                 }
             }
         }
@@ -29,8 +30,9 @@ pipeline {
             }
             steps {
                 script {
-                    // Run 'ls -al' for the master branch
-                    sh 'ls -al'
+                    // Redirect the output to a log file
+                    def logFile = 'master.log'
+                    sh 'ls -al > ${logFile} 2>&1'
                 }
             }
         }
